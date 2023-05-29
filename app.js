@@ -58,6 +58,7 @@ io.sockets.on('connection', function(socket) {
   })
 })
 
+// 원하는 포트 번호를 '2525'자리에 넣기
 server.listen(2525, function() {
   console.log('server on')
 })
