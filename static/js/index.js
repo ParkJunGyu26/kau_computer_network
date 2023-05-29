@@ -10,6 +10,7 @@ socket.on('connect', function() {
         var name = prompt('이름을 작성해주세요!', '')
     }
 
+    // 'newUser'라는 이벤트 전송(on이 있어야 수신 가능)
     socket.emit('newUser', name)
 })
 
@@ -18,13 +19,13 @@ socket.on('update', function(data) {
 })
 
 // 전송 함수
-function send() {
-    // 입력된 데이터 가져오기
+function sendMessage() {
+    // 입력된 데이터를 가져옴(무슨 내용을 전송했는지 message에 담음)
     var message = document.getElementById('test').value
 
-    // 가져왔으니 데이터를 빈칸으로 변경
+    // message 데이터 값을 저장했으니 전송을 보낼 데이터는 빈칸으로 변경
     document.getElementById('test').value = ''
 
-    // 서버로 message 이벤트를 데이터와 함께 전달
+    // message 이벤트를 통해 데이터를 서버에 전달
     socket.emit('message', {type: 'message', message: message})
 }

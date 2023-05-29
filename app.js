@@ -27,9 +27,10 @@ app.get('/', function(req, res) {
 })
 
 
-// io.socket은 접속되는 모든 소켓들을 의미
+// io.sockets은 접속되는 모든 소켓들을 의미
+// function(socket)은 접속을 한 해당 socket을 의미
 // connection, disconnect 등은 기본 이벤트
-// send는 커스텀 이벤트.(직접 만든 이벤트)
+// message는 직접 만든 이벤트인데, on(수신)과 emit(전송)이 있어야 이벤트가 발생
 io.sockets.on('connection', function(socket) {
 
   // newUser라는 커스텀이벤트. 누군가 새로 채팅방에 연결했을 때, 발생하는 이벤트
@@ -38,7 +39,7 @@ io.sockets.on('connection', function(socket) {
 
     socket.name = name
 
-    // 모든 소켓에 update라는 이벤트를 통해 누군가 들어왔다고 전송
+    // 모든 소켓(sockets)에 update라는 이벤트를 통해 누군가 들어왔다고 전송
     // update는 직접 만든 이벤트
     io.sockets.emit("update", {type: 'connect', name: 'SERVER', message: name + '님이 접속하였습니다.'})
   })
