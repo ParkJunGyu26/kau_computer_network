@@ -43,22 +43,27 @@ io.sockets.on('connection', function(socket) {
     io.sockets.emit("update", {type: 'connect', name: 'SERVER', message: name + '님이 접속하였습니다.'})
   })
 
+  // 전송한 메시지 받기
   socket.on('message', function(data) {
-    
-
+    // 받은 데이터에 누가 메시지를 전송했는지 이름 추가
     data.name = socket.name
+
+    console.log(data)
+
+    // 보낸 사람을 제외한 나머지 유저(broadcast)에게 메시지 전송
+    socket.broadcast.emit('update', data)
   })
 
-  socket.on('send', function(data) {
-    console.log('전달된 메시지:', data.msg)
-  })
-
+  
   socket.on('disconnect', function() {
-    console.log('접속 종료')
+    console.log(socket.name + '님이 퇴장했습니다.')
+
+    // 나가는 사람을 제외한 유저에게 메시지 전송
+    socket.broadcast.emit('update', {type: 'disconnect', name: 'SERVER', message: socket.name + '님이 퇴장했습니다.'})
   })
 })
 
-// 원하는 포트 번호를 '2525'자리에 넣기
-server.listen(2525, function() {
+// 원하는 포트 번호를 숫자 자리에 넣기
+server.listen(9922, function() {
   console.log('server on')
 })

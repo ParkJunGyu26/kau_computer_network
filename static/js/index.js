@@ -1,18 +1,30 @@
 var socket = io()
 
-// 접속이 되었을 때, 실행
 socket.on('connect', function() {
-    var input = document.getElementById('test')
-    input.value = '접속 됨'
+
+    // 이름을 입력받기
+    var name = prompt('반갑습니다!', '')
+
+    // 이름이 빈칸인 경우 (반복문을 통해 이름을 반드시 입력하도록 유도)
+    while (!name) {
+        var name = prompt('이름을 작성해주세요!', '')
+    }
+
+    socket.emit('newUser', name)
 })
 
-// send 함수
+socket.on('update', function(data) {
+    console.log(`${data.name}: ${data.message}`)
+})
+
+// 전송 함수
 function send() {
-    var meesage = document.getElementById('test').value
+    // 입력된 데이터 가져오기
+    var message = document.getElementById('test').value
+
+    // 가져왔으니 데이터를 빈칸으로 변경
     document.getElementById('test').value = ''
 
-    /* 'send' 라는 이름의 이벤트를 전송(emit)
-        동일한 이벤트명끼리 데이터 송수신이 가능하다. 
-        수신은(on) */
-    socket.emit('send', {msg: message})
+    // 서버로 message 이벤트를 데이터와 함께 전달
+    socket.emit('message', {type: 'message', message: message})
 }
