@@ -1,8 +1,10 @@
+// 모듈 선언
 const express = require('express')
 const socket = require('socket.io')
 const http = require('http')
 const fs = require('fs')
 
+// 모듈 바탕으로 변수 선언
 const app = express()
 const server = http.createServer(app)
 const io = socket(server)
@@ -13,7 +15,7 @@ app.use('/css', express.static('./static/css'))
 app.use('/js', express.static('./static/js'))
 
 // GET방식으로 웹서버에 요청
-// fs모듈은 파일 관련을 처리
+// fs모듈은 파일 처리
 app.get('/', function(req, res) {
   fs.readFile('./static/index.html', function(err, data) {
     if (err) {
@@ -40,11 +42,11 @@ io.sockets.on('connection', function(socket) {
     socket.name = name
 
     // 모든 소켓(sockets)에 update라는 이벤트를 통해 누군가 들어왔다고 전송
-    // update는 직접 만든 이벤트
+    // 직접 만든 이벤트 'update'
     io.sockets.emit("update", {type: 'connect', name: 'SERVER', message: name + '님이 접속하였습니다.'})
   })
 
-  // 전송한 메시지 받기
+  // 전송한 메시지 받기(직접 만든 이벤트 'message')
   socket.on('message', function(data) {
     // 받은 데이터에 누가 메시지를 전송했는지 이름 추가
     data.name = socket.name
@@ -55,7 +57,7 @@ io.sockets.on('connection', function(socket) {
     socket.broadcast.emit('update', data)
   })
 
-  
+  // 접속 종료(기본적으로 제공하는 이벤트 'disconnect')
   socket.on('disconnect', function() {
     console.log(socket.name + '님이 퇴장했습니다.')
 
