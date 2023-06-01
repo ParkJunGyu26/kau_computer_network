@@ -13,6 +13,7 @@ const io = socket(server)
 // app.use()를 사용하여 원하는 미들웨어를 추가하여 조합 가능
 app.use('/css', express.static('./static/css'))
 app.use('/js', express.static('./static/js'))
+app.use('/images', express.static('./static/images'))
 
 // GET방식으로 웹서버에 요청
 // fs모듈은 파일 처리
@@ -28,6 +29,18 @@ app.get('/', function(req, res) {
   })
 })
 
+// 배경 이미지 불러오기
+app.get('/images', function(request, response){
+  fs.readFile('./static/images/ui_with_logo.png', function(err, data){
+    if(err) {
+      response.send('에러')
+    } else {
+      response.writeHead(200, {'Content-Type':'text/html'})
+      response.write(data)
+      response.end()
+    }
+  })
+})
 
 // io.sockets은 접속되는 모든 소켓들을 의미
 // function(socket)은 접속을 한 해당 socket을 의미

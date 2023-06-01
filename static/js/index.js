@@ -16,6 +16,12 @@ socket.on('connect', function() {
     socket.emit('newUser', name)
 })
 
+/* 자동 스크롤 기능 */
+function scrollToBottom() {
+    var chatContainer = document.getElementById('chat');
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
+
 // 서버로부터 클라이언트가 데이터를 받았을 때, 발생하는 update 이벤트
 socket.on('update', function(data) {
     var chat = document.getElementById('chat')
@@ -42,6 +48,8 @@ socket.on('update', function(data) {
     message.classList.add(className)
     message.appendChild(node)
     chat.appendChild(message)
+
+    scrollToBottom(); // 자동 스크롤 함수 호출
 })
 
 // 메시지 전송 함수
@@ -59,6 +67,8 @@ function sendMessage() {
     msg.classList.add('me')
     msg.appendChild(node)
     chat.appendChild(msg)
+
+    scrollToBottom(); // 자동 스크롤 함수 호출
 
     // message 이벤트를 통해 데이터를 서버에 전달
     socket.emit('message', {type: 'message', message: message})
