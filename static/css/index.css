@@ -45,6 +45,13 @@ body{
   font-family: 'BMJUA';
 }
 
+#userContainer {
+  overflow-y: auto;
+  width: 200px;  /* 가로 폭을 늘림 */
+  border: 1px solid #000;
+  margin-left: 30px;  /* 채팅창과의 간격을 늘림 */
+}
+
 .score-message {
   font-size: x-large;
   color: blue;
