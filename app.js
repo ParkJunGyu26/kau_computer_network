@@ -50,13 +50,13 @@ io.sockets.on('connection', function(socket) {
 
   // newUser라는 커스텀이벤트. 누군가 새로 채팅방에 연결했을 때, 발생하는 이벤트
   socket.on('newUser', function(name) {
-    console.log(name + '님이 접속하였습니다.')
+    console.log(name + '님이 접속했습니다.')
 
     socket.name = name
 
     // 모든 소켓(sockets)에 update라는 이벤트를 통해 누군가 들어왔다고 전송
     // 직접 만든 이벤트 'update'
-    io.sockets.emit("update", {type: 'connect', name: 'SERVER', message: name + '님이 접속하였습니다.'})
+    io.sockets.emit("update", {type: 'connect', name: 'SERVER', message: name + '님이 접속했습니다.'})
   })
 
   // 전송한 메시지 받기(직접 만든 이벤트 'message')
@@ -83,3 +83,41 @@ io.sockets.on('connection', function(socket) {
 server.listen(9922, function() {
   console.log('server on')
 })
+
+/* 점수 처리, 사진 업로드 기능 */
+io.sockets.on('connection', function(socket) {
+  // newUser, message, disconnect 이벤트 처리 로직은 그대로 유지합니다.
+
+  // 초기 점수 설정
+  var score = 0;
+
+  // 점수 증가 요청 처리
+  socket.on('incrementScore', function() {
+    // 현재 버튼 점수 증가 로직
+    score++;
+
+    // 변경된 점수를 모든 클라이언트에게 전송
+    io.sockets.emit('update', { type: 'score', score: score });
+  });
+
+  // 점수 감소 요청 처리
+  socket.on('decrementScore', function() {
+
+    // 현재 버튼 점수 감소 로직
+    score--;
+
+    // 변경된 점수를 모든 클라이언트에게 전송
+    io.sockets.emit('update', { type: 'score', score: score });
+  });
+
+  // 사진 업로드 처리
+  socket.on('uploadImage', function(data) {
+    // data.imageURL을 적절히 처리하여 저장하거나 다른 클라이언트에게 전달합니다.
+    // 예를 들어, 이미지를 서버에 저장하고 해당 이미지의 URL을 다른 클라이언트에게 전달할 수 있습니다.
+  
+    var imageURL = data.imageURL; // 업로드된 이미지의 URL
+    // 변경된 이미지 정보를 모든 클라이언트에게 전송
+    io.sockets.emit('update', { type: 'image', imageURL: imageURL });
+  });
+  
+});
