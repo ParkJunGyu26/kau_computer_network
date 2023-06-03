@@ -70,6 +70,33 @@ socket.on('update', function(data) {
 
     scrollToBottom(); // 자동 스크롤 함수 호출
 })
+socket.on('updateUsers', function(users) {
+    const userList = document.getElementById('userList')
+    userList.innerHTML = ''
+    for (let id in users) {
+      let user = users[id]
+      let node = document.createElement('li')
+      node.textContent = `${user.name}: ${user.score}`
+
+      // 점수를 올리거나 내리는 버튼을 추가합니다.
+      let increaseButton = document.createElement('button')
+      increaseButton.textContent = '+'
+      increaseButton.onclick = function() {
+        socket.emit('increaseScore', id) // 버튼 클릭 시 서버에 점수 증가 이벤트를 전송합니다.
+      }
+
+      let decreaseButton = document.createElement('button')
+      decreaseButton.textContent = '-'
+      decreaseButton.onclick = function() {
+        socket.emit('decreaseScore', id) // 버튼 클릭 시 서버에 점수 감소 이벤트를 전송합니다.
+      }
+
+      node.appendChild(increaseButton)
+      node.appendChild(decreaseButton)
+      userList.appendChild(node)
+    }
+})
+  
 
 // 메시지 전송 함수
 function sendMessage() {
