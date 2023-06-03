@@ -1,0 +1,12 @@
+[33md16d2e6[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m 참여자 목록 UI 제외 기능 및 UI 모두 구현 완료
+[33m3490f5f[m Merge pull request #2 from ParkJunGyu26/frontend
+[33me8a8d4a[m[33m ([m[1;31morigin/frontend[m[33m)[m Changed UI, Modified Notification, Added Photo Upload function, Added Score function
+[33m3db0281[m UI changed and auto scroll function added
+[33m6bb1854[m[33m ([m[1;31morigin/backend_2[m[33m)[m 주석처리 및 enter키 이벤트 추가 및 프론트 및 백엔드 기본 틀 완성
+[33m652473c[m 주석 추가
+[33m62fb68e[m 전체적인 수정
+[33m760351d[m 포트번호 주석
+[33m2314802[m Merge pull request #1 from ParkJunGyu26/backend
+[33m2632c5a[m 백엔드 및 프론트엔드 기본사항 추가
+[33m266c229[m backend modules
+[33m716d17d[m Initial commit

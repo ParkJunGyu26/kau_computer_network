@@ -54,9 +54,12 @@ io.sockets.on('connection', function(socket) {
   // newUser라는 커스텀이벤트. 누군가 새로 채팅방에 연결했을 때, 발생하는 이벤트
   socket.on('newUser', function(name) {
     console.log(name + '님이 접속하였습니다.')
+    console.log(socket.id)
+    
 
     // 사용자 이름 대신 사용자 정보를 저장하는 객체를 사용
     users[socket.id] = { name: name, score: 0 }
+    console.log(users)
 
     // 모든 소켓(sockets)에 update라는 이벤트를 통해 누군가 들어왔다고 전송
     // 직접 만든 이벤트 'update'
@@ -95,14 +98,15 @@ io.sockets.on('connection', function(socket) {
 
   // 접속 종료(기본적으로 제공하는 이벤트 'disconnect')
   socket.on('disconnect', function() {
+    console.log()
 
     if(!users[socket.id]) {
       return
     }
-    console.log(users[socket[id].name] + '님이 나갔습니다.')
+    console.log(users[socket.id].name + '님이 나갔습니다.')
 
     // 나가는 사람을 제외한 유저에게 메시지 전송
-    socket.broadcast.emit('update', {type: 'disconnect', name: 'SERVER', message: users[socket.id] + '님이 나갔습니다.'})
+    socket.broadcast.emit('update', {type: 'disconnect', name: 'SERVER', message: users[socket.id].name + '님이 나갔습니다.'})
 
     // 해당 사용자 정보 삭제
     delete users[socket.id]
@@ -113,7 +117,7 @@ io.sockets.on('connection', function(socket) {
 })
 
 // 원하는 포트 번호를 숫자 자리에 넣기
-server.listen(9922, function() {
+server.listen(15000, function() {
   console.log('server on')
 })
 
