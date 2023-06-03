@@ -1,54 +1,148 @@
+/* 폰트 */
+@font-face {
+  font-family: 'NeoDunggeunmoPro-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'BMJUA';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'LINESeedKR-Bd';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* 배경 */
+body{
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+}
+
 /* 메인 */
 #main {
-    margin: auto;
-    margin-top: 100px;
-    border-radius: 20px;
-    background-color: lightblue;
-    text-align: center;
-    width: 500px;
-    height: 800px;
-  }
-   
-  /* 채팅 영역 */
-  #chat {
-    height: 90%;
-    width: 100%;
-    overflow-y: auto;
-  }
-   
-  /* 접속 알림 */
-  .connect {
-    width: 90%;
-    margin: auto;
-    background-color: aquamarine;
-    text-align: center;
-    margin-top: 10px;
-  }
-   
-  /* 접속 종료 알림 */
-  .disconnect {
-    width: 90%;
-    margin: auto;
-    background-color: indianred;
-    text-align: center;
-    margin-top: 10px;
-  }
-   
-  /* 내가 보낸 메시지 */
-  .me {
-    width: 90%;
-    margin: auto;
-    background-color: lemonchiffon;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
-   
-  /* 상대방이 보낸 메시지 */
-  .other {
-    width: 90%;
-    margin: auto;
-    background-color: white;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
-  
+  margin: auto;
+  margin-top: 95px;
+  border-radius: 20px;
+  background-color: transparent;
+  text-align: center;
+  width: 1000px;
+  height: 810px; /*850px*/
+}
+
+/* 채팅 영역 */
+#chat {
+  height: 90%;
+  width: 100%;
+  overflow-y: auto;
+  font-family: 'BMJUA';
+}
+
+.score-message {
+  font-size: x-large;
+  color: blue;
+  text-align: left; /* 왼쪽 정렬 */
+  font-family: 'NeoDunggeunmoPro-Regular';
+}
+
+/* 접속 알림 */
+.connect {
+  width: 80%;
+  margin: auto;
+  border-radius: 20px;
+  background-color: aquamarine;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* 접속 종료 알림 */
+.disconnect {
+  width: 80%;
+  margin: auto;
+  border-radius: 20px;
+  background-color: indianred;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* 내가 보낸 메시지 */
+.me {
+  width: 80%;
+  margin: auto;
+  border-radius: 20px;
+  background-color: lemonchiffon;
+  margin-top: 10px;
+}
+
+/* 상대방이 보낸 메시지 */
+.other {
+  width: 80%;
+  margin: auto;
+  border-radius: 20px;
+  background-color: white;
+  margin-top: 10px;
+}
+
+/* 입력 창 */
+input[type=text] {
+  position: relative;
+  border-radius: 10px;
+  margin : auto;
+  width: 80%;
+  height: 55px;
+  background-color: #FFF2CC;
+  border-color: mediumturquoise;
+  font-size: large;
+  font-family: 'BMJUA';
+  text-indent: 35%;
+}
+
+/* 버튼 */
+button{
+  width: 100px;
+  height: 62px;
+  border-radius: 10px;
+  font-size: large;
+  font-family: 'BMJUA';
+}
+
+#upscorebtn{  
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  border-width: 1.5px;
+  background-color: rgba(0, 255, 255, 0.315);
+  font-size: large;
+  font-family: sans-serif;
+}
+
+#downscorebtn{  
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  border-width: 1.5px;
+  background-color: rgba(255, 0, 234, 0.151);
+  font-size: large;
+  font-family: sans-serif;
+}
+
+#uploadbtn{
+  width: 60px;
+  height: 20px;
+  border-radius: 0px;
+  border-width: 1px;
+  font-size: small;
+  font-family: sans-serif;
+}
+
+#scoreDisplay{
+  font-size: medium;
+  font-family: 'LINESeedKR-Bd';
+}

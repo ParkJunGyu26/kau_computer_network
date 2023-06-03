@@ -6,14 +6,24 @@
     <link rel="stylesheet" href="/css/index.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
   </head>
-  <body>
+  <body background="/images/ui_with_logo.png">
     <div id="main">
+      <div id="scoreContainer">
+        <button id="upscorebtn" onclick="incrementScore()"> + </button>
+        <span id="scoreDisplay">📢 방장만 정답을 올리고 내릴 수 있습니다</span>
+        <button id="downscorebtn" onclick="decrementScore()"> - </button>
+      </div>
+      <div>
+        <input type="file" id="file-input">
+        <button id="uploadbtn" onclick="uploadFile()">Upload</button>
+      </div>
       <div id="chat">
         <!-- 채팅 메시지 영역 -->
       </div>
       <div>
-        <input type="text" id="test" placeholder="메시지를 입력해주세요..">
+        <input type="text" id="test" placeholder="메시지를 입력해주세요">
         <button onclick="sendMessage()">전송</button>
       </div>
     </div>
