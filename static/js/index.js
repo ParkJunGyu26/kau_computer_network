@@ -43,6 +43,7 @@ socket.on('update', function(data) {
     message.appendChild(node)
     chat.appendChild(message)
 })
+
 socket.on('updateUsers', function(users) {
     const userList = document.getElementById('userList')
     userList.innerHTML = ''

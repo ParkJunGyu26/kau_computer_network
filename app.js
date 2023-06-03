@@ -9,10 +9,14 @@ const app = express()
 const server = http.createServer(app)
 const io = socket(server)
 
+
 // 정적파일(프론트)을 위한 미들웨어
 // app.use()를 사용하여 원하는 미들웨어를 추가하여 조합 가능
 app.use('/css', express.static('./static/css'))
 app.use('/js', express.static('./static/js'))
+
+// 사용자 관리를 위한 객체 생성
+let users = {}
 
 // GET방식으로 웹서버에 요청
 // fs모듈은 파일 처리
@@ -39,30 +43,56 @@ io.sockets.on('connection', function(socket) {
   socket.on('newUser', function(name) {
     console.log(name + '님이 접속하였습니다.')
 
-    socket.name = name
+    // 사용자 이름 대신 사용자 정보를 저장하는 객체를 사용
+    users[socket.id] = { name: name, score: 0 }
 
     // 모든 소켓(sockets)에 update라는 이벤트를 통해 누군가 들어왔다고 전송
     // 직접 만든 이벤트 'update'
     io.sockets.emit("update", {type: 'connect', name: 'SERVER', message: name + '님이 접속하였습니다.'})
+    // 사용자 목록 업데이트 이벤트 전송
+    io.sockets.emit('updateUsers', users)
   })
 
   // 전송한 메시지 받기(직접 만든 이벤트 'message')
   socket.on('message', function(data) {
     // 받은 데이터에 누가 메시지를 전송했는지 이름 추가
-    data.name = socket.name
+    data.name = users[socket.id].name
 
     console.log(data)
 
     // 보낸 사람을 제외한 나머지 유저(broadcast)에게 메시지 전송
     socket.broadcast.emit('update', data)
   })
+  // 점수 증가 이벤트
+  socket.on('increaseScore', function(id) {
+    if (users[id]) {
+      users[id].score += 1
+      io.sockets.emit('updateUsers', users)
+    }
+  })
 
-  // 접속 종료(기본적으로 제공하는 이벤트 'disconnect')
+  // 점수 감소 이벤트
+  socket.on('decreaseScore', function(id) {
+    if (users[id] && users[id].score > 0) {
+      users[id].score -= 1
+      io.sockets.emit('updateUsers', users)
+    }
+  })
+
   socket.on('disconnect', function() {
-    console.log(socket.name + '님이 퇴장했습니다.')
+    if (!users[socket.id]) {
+      return
+    }
+    console.log(users[socket.id].name + '님이 나갔습니다.')
 
     // 나가는 사람을 제외한 유저에게 메시지 전송
-    socket.broadcast.emit('update', {type: 'disconnect', name: 'SERVER', message: socket.name + '님이 퇴장했습니다.'})
+    socket.broadcast.emit('update', {type: 'disconnect', name: 'SERVER', message: users[socket.id].name + '님이 나갔습니다.'})
+
+    // 해당 사용자 정보 삭제
+    delete users[socket.id]
+
+    // 사용자 목록 업데이트 이벤트 전송
+    io.sockets.emit('updateUsers', users)
   })
 })
 
