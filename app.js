@@ -99,10 +99,10 @@ io.sockets.on('connection', function(socket) {
     if(!users[socket.id]) {
       return
     }
-    console.log(users[socket[id].name] + '님이 나갔습니다.')
+    console.log(users[socket.id].name + '님이 나갔습니다.')
 
     // 나가는 사람을 제외한 유저에게 메시지 전송
-    socket.broadcast.emit('update', {type: 'disconnect', name: 'SERVER', message: users[socket.id] + '님이 나갔습니다.'})
+    socket.broadcast.emit('update', {type: 'disconnect', name: 'SERVER', message: users[socket.id].name + '님이 나갔습니다.'})
 
     // 해당 사용자 정보 삭제
     delete users[socket.id]
@@ -119,35 +119,6 @@ server.listen(9922, function() {
 
 /* 점수 처리, 사진 업로드 기능 */
 io.sockets.on('connection', function(socket) {
-  // newUser, message, disconnect 이벤트 처리 로직은 그대로 유지합니다.
-
-  // // 초기 점수 설정
-  // var score = 0;
-
-  // // 점수 증가 요청 처리
-  // socket.on('incrementScore', function(id) {
-  //   if (users[id]) {
-  //     users[id].score += 1
-  //     io.sockets.emit('updateUsers', users)
-  //   }
-
-  //   // // 변경된 점수를 모든 클라이언트에게 전송
-  //   // io.sockets.emit('update', { type: 'score', score: score });
-  // });
-
-  // // 점수 감소 요청 처리
-  // socket.on('decrementScore', function() {
-
-  //   if (users[id] && users[id].score > 0) {
-  //     users[id].score -= 1
-  //     io.sockets.emit('updateUsers', users)
-  //   }
-  //   // // 현재 버튼 점수 감소 로직
-  //   // score--;
-
-  //   // // 변경된 점수를 모든 클라이언트에게 전송
-  //   // io.sockets.emit('update', { type: 'score', score: score });
-  // });
 
   // 사진 업로드 처리
   socket.on('uploadImage', function(data) {

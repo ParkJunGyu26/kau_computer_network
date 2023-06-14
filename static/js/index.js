@@ -43,6 +43,8 @@ socket.on('update', function(data) {
         // 이미지 메시지 처리
         var message = document.createElement('div');
         var image = document.createElement('img');
+        image.style.maxWidth = '500px';         // 이미지의 최대 너비를 500px로 제한
+        image.style.maxHeight = '300px';        // 이미지의 최대 높이를 300px로 제한
         image.src = data.imageURL;
         message.appendChild(image);
         chat.appendChild(message);
